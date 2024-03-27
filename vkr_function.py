@@ -17,9 +17,9 @@ def print_scores(y_test, y_predict, test_ = True):
     print('Ошибка на тестовых данных')
   else:
     print("Ошибка на полных данных")
-  print('MSE: %.4f' % mse(y_test,y_predict))
-  print('RMSE: %.4f' % mse(y_test,y_predict,squared=False))
-  print('R2 : %.4f' %  r2_score(y_test,y_predict))
+  print('MSE: %.5f' % mse(y_test,y_predict))
+  print('RMSE: %.5f' % mse(y_test,y_predict,squared=False))
+  print('R2 : %.5f' %  r2_score(y_test,y_predict))
 
 
 
