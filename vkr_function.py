@@ -122,3 +122,57 @@ def my_test_train_split(X, Y, borders, test_size=0.1):
   y_test = Y[i_test]
 
   return X_train, y_train, X_test, y_test, i_test
+
+def my_test_val_train_split(X, Y, borders, test_size=0.2, val_size=0.2):
+  # функция разделения на обучающую, валидационную и тренировочную выборку
+
+  import random
+
+  b1 = 0
+  i_test = []
+  i_val = []
+  l_ = len(Y)
+
+  test_val_size = test_size+val_size*(1-test_size)
+
+  for i_s in borders:
+    i_t = random.sample(range(b1, i_s), int(test_val_size*(i_s-b1)))
+
+    i_v = random.sample(i_t, int(len(i_t)*(val_size/test_val_size)))
+    
+    for x1 in i_v:
+      i_t.remove(x1)
+
+    i_test.extend(i_t)
+    i_val.extend(i_v)
+    b1 = i_s
+
+  i_t = random.sample(range(b1, l_), int(test_val_size*(l_-b1)))
+
+  i_v = random.sample(i_t, int(len(i_t)*(test_size/test_val_size)))
+
+  for x1 in i_v:
+    i_t.remove(x1)
+
+  i_test.extend(i_t)
+  i_val.extend(i_v)
+  
+  i_test.sort()
+  i_val.sort()
+
+  i_train = list(range(0,l_))
+  for x1 in i_test:
+    i_train.remove(x1)
+  for x1 in i_val:
+    i_train.remove(x1)
+
+  X_train = X[i_train,:]
+  y_train = Y[i_train]
+
+  X_val = X[i_val,:]
+  y_val = Y[i_val]
+
+  X_test = X[i_test,:]
+  y_test = Y[i_test]
+
+  return X_train, y_train, i_train, X_val, y_val, i_val, X_test, y_test, i_test
